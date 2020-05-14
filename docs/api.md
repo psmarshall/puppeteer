@@ -2503,7 +2503,7 @@ await page.tracing.stop();
 - `options` <[Object]>
   - `path` <[string]> A path to write the trace file to.
   - `screenshots` <[boolean]> captures screenshots in the trace.
-  - `categories` <[Array]<[string]>> specify custom categories to use instead of default.
+  - `categories` <[Array]<[string]>> specify custom categories to use instead of default. Excluding categories (with a prefixed `-`) is not supported.
 - returns: <[Promise]>
 
 Only one trace can be active at a time per browser.

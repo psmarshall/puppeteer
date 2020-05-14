@@ -37,8 +37,7 @@ export class Tracing {
       'Cannot start recording trace while already recording trace.'
     );
 
-    const defaultCategories = [
-      '-*',
+    const defaultIncludedCategories = [
       'devtools.timeline',
       'v8.execute',
       'disabled-by-default-devtools.timeline',
@@ -51,10 +50,13 @@ export class Tracing {
       'disabled-by-default-v8.cpu_profiler',
       'disabled-by-default-v8.cpu_profiler.hires',
     ];
+    const excludedCategories = [
+      '*',
+    ];
     const {
       path = null,
       screenshots = false,
-      categories = defaultCategories,
+      categories = defaultIncludedCategories,
     } = options;
 
     if (screenshots) categories.push('disabled-by-default-devtools.screenshot');
@@ -63,7 +65,7 @@ export class Tracing {
     this._recording = true;
     await this._client.send('Tracing.start', {
       transferMode: 'ReturnAsStream',
-      categories: categories.join(','),
+      traceConfig: { includedCategories: categories, excludedCategories },
     });
   }
 
